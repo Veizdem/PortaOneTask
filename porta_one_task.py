@@ -12,9 +12,13 @@ def get_list_from_file(filename: str) -> list:
             Returns:
                     lines (list): List of numbers
     """
-    with open(filename, 'r') as f:
-        lines = [int(line.strip()) for line in f]
-    return lines
+    try:
+        with open(filename, 'r') as f:
+            lines = [int(line.strip()) for line in f]
+        return lines
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
 
 
 def get_max(filename: str) -> int:
@@ -28,15 +32,22 @@ def get_max(filename: str) -> int:
                         max (int): Maximum number
     """
     max_num = None
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line.strip())
-            if not max_num:
-                max_num = num
-                continue
-            if num > max_num:
-                max_num = num
-    return max_num
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                num = int(line.strip())
+                if not max_num:
+                    max_num = num
+                    continue
+                if num > max_num:
+                    max_num = num
+        return max_num
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def get_min(filename: str) -> int:
@@ -50,15 +61,22 @@ def get_min(filename: str) -> int:
                         min (int): Minimum number
     """
     min_num = None
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line.strip())
-            if not min_num:
-                min_num = num
-                continue
-            if num < min_num:
-                min_num = num
-    return min_num
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                num = int(line.strip())
+                if not min_num:
+                    min_num = num
+                    continue
+                if num < min_num:
+                    min_num = num
+        return min_num
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def get_median(filename: str) -> float:
@@ -71,14 +89,19 @@ def get_median(filename: str) -> float:
                 Returns:
                         med (float): Median
         """
-    numbers = get_list_from_file(filename)
-    nums_sort = sorted(numbers)
-    mid = len(numbers) // 2
-    if len(numbers) % 2 == 0:
-        med = (nums_sort[mid] + nums_sort[~mid]) / 2
-    else:
-        med = nums_sort[mid]
-    return med
+    try:
+        numbers = get_list_from_file(filename)
+        if numbers:
+            nums_sort = sorted(numbers)
+            mid = len(numbers) // 2
+            if len(numbers) % 2 == 0:
+                med = (nums_sort[mid] + nums_sort[~mid]) / 2
+            else:
+                med = nums_sort[mid]
+            return med
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def get_avg(filename: str) -> float:
@@ -91,13 +114,23 @@ def get_avg(filename: str) -> float:
                 Returns:
                         avg (float): Arithmetic mean
         """
-    file_len = 0
-    file_sum = 0
-    with open(filename, 'r') as f:
-        for line in f:
-            file_sum += int(line.strip())
-            file_len += 1
-    return file_sum / file_len
+    try:
+        file_len = 0
+        file_sum = 0
+        with open(filename, 'r') as f:
+            for line in f:
+                file_sum += int(line.strip())
+                file_len += 1
+        return file_sum / file_len
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
+    except ZeroDivisionError:
+        print("File is empty.")
+        raise
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def grow_seq(filename: str) -> list:
@@ -112,19 +145,26 @@ def grow_seq(filename: str) -> list:
         """
     seq = []
     tmp = []
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line.strip())
-            if len(tmp) == 0:
-                tmp.append(num)
-                continue
-            if num > tmp[-1]:
-                tmp.append(num)
-            else:
-                if len(tmp) > len(seq):
-                    seq = tmp[:]
-                tmp.clear()
-    return seq
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                num = int(line.strip())
+                if len(tmp) == 0:
+                    tmp.append(num)
+                    continue
+                if num > tmp[-1]:
+                    tmp.append(num)
+                else:
+                    if len(tmp) > len(seq):
+                        seq = tmp[:]
+                    tmp.clear()
+        return seq
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def fall_seq(filename: str) -> list:
@@ -139,19 +179,26 @@ def fall_seq(filename: str) -> list:
         """
     seq = []
     tmp = []
-    with open(filename, 'r') as f:
-        for line in f:
-            num = int(line.strip())
-            if len(tmp) == 0:
-                tmp.append(num)
-                continue
-            if num < tmp[-1]:
-                tmp.append(num)
-            else:
-                if len(tmp) > len(seq):
-                    seq = tmp[:]
-                tmp.clear()
-    return seq
+    try:
+        with open(filename, 'r') as f:
+            for line in f:
+                num = int(line.strip())
+                if len(tmp) == 0:
+                    tmp.append(num)
+                    continue
+                if num < tmp[-1]:
+                    tmp.append(num)
+                else:
+                    if len(tmp) > len(seq):
+                        seq = tmp[:]
+                    tmp.clear()
+        return seq
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")
+        raise
+    except Exception as e:
+        print(f"Error from work with file.\n{e}")
+        raise
 
 
 def _main():
